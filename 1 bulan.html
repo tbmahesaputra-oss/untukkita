@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy 1 Month 💖</title>
+
+<!-- FONT BARU -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffd6e7,#fff0f6);
+    font-family:'Poppins', sans-serif;
+    overflow:hidden;
+}
+
+/* INTRO */
+.intro{
+    position:fixed;
+    inset:0;
+    background:#ffd6e7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:10;
+    animation:fadeOut 2s forwards 4s;
+    text-align:center;
+}
+.intro h1{
+    font-weight:600;
+    color:#ff2e7a;
+    font-size:34px;
+}
+.intro p{
+    font-size:16px;
+    color:#ff2e7a;
+}
+@keyframes fadeOut{
+    to{opacity:0; visibility:hidden;}
+}
+
+/* LOVE */
+.heart{
+    position:fixed;
+    top:-10px;
+    font-size:20px;
+    animation:fall linear infinite;
+}
+@keyframes fall{ to{transform:translateY(110vh);} }
+
+/* BOX */
+.box{
+    width:92vw;
+    max-width:420px;
+    background:white;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+    padding:30px 20px 80px;
+    text-align:center;
+    position:relative;
+}
+
+/* TEXT */
+.text{
+    font-size:18px;
+    color:#ff2e7a;
+    line-height:1.9;
+    min-height:150px;
+    font-weight:400;
+}
+
+/* BUTTON */
+.controls{
+    position:absolute;
+    bottom:15px;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+}
+
+button{
+    padding:8px 16px;
+    border:none;
+    border-radius:18px;
+    background:#ff2e7a;
+    color:white;
+    font-family:'Poppins', sans-serif;
+    font-size:14px;
+}
+
+#kirimBtn{
+    display:none;
+    background:#25D366;
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div class="intro">
+    <h1>Hai Sayang 💕</h1>
+    <p>Aku punya sesuatu buat kamu...</p>
+</div>
+
+<!-- BOX -->
+<div class="box">
+    <div id="text" class="text"></div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">⬅️</button>
+        <button onclick="nextSlide()">➡️</button>
+        <button id="kirimBtn" onclick="kirimWA()">Kirim Pesan 💌</button>
+    </div>
+</div>
+
+<script>
+// love jatuh
+function createHeart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💗";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+}
+setInterval(createHeart,300);
+
+// SLIDES (5 kalimat)
+const slides = [
+`Gak kerasa ya kita sudah satu bulan bareng. Waktu terasa cepat kalau sama kamu. Setiap hari selalu ada cerita baru. Hal kecil jadi berarti sejak ada kamu. Aku bersyukur bisa kenal kamu.`,
+
+`Kamu selalu sabar menghadapi aku. Kamu selalu dengerin cerita aku. Perhatian kecil dari kamu itu berarti. Aku nyaman banget kalau sama kamu. Kamu bikin hari aku lebih baik.`,
+
+`Banyak momen lucu yang selalu aku ingat. Chat random kita bikin ketawa sendiri. Hal sederhana terasa indah. Kamu selalu bikin aku senyum. Aku senang berbagi waktu sama kamu.`,
+
+`Aku harap kita bisa terus bareng lama. Bukan cuma satu bulan tapi seterusnya. Semoga hubungan kita makin kuat. Aku mau bikin banyak kenangan lagi. Karena kamu berarti banget buat aku.`,
+
+`Terima kasih sudah hadir di hidup aku. Terima kasih sudah jadi bagian hariku. Aku bahagia punya kamu. Semoga kamu juga bahagia sama aku. Aku sayang banget sama kamu.`,
+
+`Happy one month anniversary ya sayang. Semoga ini jadi awal cerita panjang. Aku mau terus ada buat kamu. Aku mau jaga hubungan ini baik-baik. Kamu spesial banget buat aku.`,
+
+`Sekarang aku cuma mau kamu tahu. Perasaan aku ke kamu besar banget. Semoga kamu senyum baca ini. Dan semoga kamu ngerasain hal yang sama. Aku mau kirim pesan ini ke aku?.`
+];
+
+let index = 0;
+const textEl = document.getElementById("text");
+const kirimBtn = document.getElementById("kirimBtn");
+
+// efek per kata
+function typeWords(sentence){
+    textEl.innerHTML="";
+    const words = sentence.split(" ");
+    let i=0;
+    function showWord(){
+        if(i < words.length){
+            textEl.innerHTML += words[i] + " ";
+            i++;
+            setTimeout(showWord,110);
+        }
+    }
+    showWord();
+}
+
+function showSlide(i){
+    typeWords(slides[i]);
+    kirimBtn.style.display = (i === slides.length-1) ? "inline-block":"none";
+}
+
+function nextSlide(){
+    if(index < slides.length-1){
+        index++;
+        showSlide(index);
+    }
+}
+
+function prevSlide(){
+    if(index > 0){
+        index--;
+        showSlide(index);
+    }
+}
+
+showSlide(index);
+
+// WA
+function kirimWA(){
+    const nomorPacar = "6283819237425"; // GANTI
+    const pesan = encodeURIComponent("Happy 1 Month Anniversary sayang 💖 Aku bersyukur banget punya kamu.");
+    window.location.href = `https://wa.me/${nomorPacar}?text=${pesan}`;
+}
+</script>
+
+</body>
+</html>
